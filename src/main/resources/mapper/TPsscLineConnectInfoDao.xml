@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bm.dom4j.dao.TPsscLineConnectInfoDao">
+  <resultMap id="BaseResultMap" type="com.bm.dom4j.entity.TPsscLineConnectInfo">
+    <id column="OBJ_ID" jdbcType="VARCHAR" property="objId" />
+    <result column="FEEDER_ID" jdbcType="VARCHAR" property="feederId" />
+    <result column="CONN_FEEDER_ID" jdbcType="VARCHAR" property="connFeederId" />
+    <result column="CONN_DEVICE_ID" jdbcType="VARCHAR" property="connDeviceId" />
+    <result column="CONN_DEVICE_TYPE" jdbcType="VARCHAR" property="connDeviceType" />
+    <result column="INS_TIME" jdbcType="TIMESTAMP" property="insTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    OBJ_ID, FEEDER_ID, CONN_FEEDER_ID, CONN_DEVICE_ID, CONN_DEVICE_TYPE, INS_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_PSSC_LINE_CONNECT_INFO
+    where OBJ_ID = #{objId,jdbcType=VARCHAR}
+  </select>
+  <insert id="insertSelective" keyColumn="OBJ_ID" keyProperty="objId" parameterType="com.bm.dom4j.entity.TPsscLineConnectInfo" useGeneratedKeys="true">
+    insert into T_PSSC_LINE_CONNECT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="objId != null">
+            OBJ_ID,
+      </if>
+      <if test="feederId != null">
+        FEEDER_ID,
+      </if>
+      <if test="connFeederId != null">
+        CONN_FEEDER_ID,
+      </if>
+      <if test="connDeviceId != null">
+        CONN_DEVICE_ID,
+      </if>
+      <if test="connDeviceType != null">
+        CONN_DEVICE_TYPE,
+      </if>
+      <if test="insTime != null">
+        INS_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="objId != null">
+        #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="feederId != null">
+        #{feederId,jdbcType=VARCHAR},
+      </if>
+      <if test="connFeederId != null">
+        #{connFeederId,jdbcType=VARCHAR},
+      </if>
+      <if test="connDeviceId != null">
+        #{connDeviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="connDeviceType != null">
+        #{connDeviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="insTime != null">
+        #{insTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bm.dom4j.entity.TPsscLineConnectInfo">
+    update T_PSSC_LINE_CONNECT_INFO
+    <set>
+      <if test="feederId != null">
+        FEEDER_ID = #{feederId,jdbcType=VARCHAR},
+      </if>
+      <if test="connFeederId != null">
+        CONN_FEEDER_ID = #{connFeederId,jdbcType=VARCHAR},
+      </if>
+      <if test="connDeviceId != null">
+        CONN_DEVICE_ID = #{connDeviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="connDeviceType != null">
+        CONN_DEVICE_TYPE = #{connDeviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="insTime != null">
+        INS_TIME = #{insTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where OBJ_ID = #{objId,jdbcType=VARCHAR}
+  </update>
+  <select id="getLineConnInfoByDeviceID" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from T_PSSC_LINE_CONNECT_INFO
+    where CONN_DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+  </select>
+  <select id="getLineIdByLineName" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT
+        LINE_ID
+    FROM
+        T_PDR_CONTCAT_LINE_INFO
+    WHERE
+        LINE_NAME = #{lineName}
+  </select>
+  <select id="getFeederIdByOidAndSbzlx" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT
+            sbid
+        FROM
+            dwzy.t_tx_zwyc_dkx
+        WHERE
+            oid = #{oid}
+            AND sbzlx = #{sbzlx}
+   </select>
+  <select id="getSbidByOid" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+            sbid
+        FROM
+            dwzy.t_tx_zwyc_zsdlq
+        WHERE
+            oid = #{oid}
+   </select>
+  <select id="getSblxAndTxbmBySblxZx" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+            ee.sblxbm
+        FROM
+            scyw.T_DW_BZZX_SBFL ee
+        WHERE
+            ee.syzy = '配电'
+            AND ee.sblxbm_zx = #{SblxZx}
+   </select>
+</mapper>

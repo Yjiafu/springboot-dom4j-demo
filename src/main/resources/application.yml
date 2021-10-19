@@ -1,0 +1,23 @@
+server:
+  port: 8078
+  servlet:
+    contextPath: /
+    jsp:
+      init-parameters:
+        development: true
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@172.16.221.208:1521:nxpssc
+    username: pssc
+    password: pssc
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.uk.dom4j
+
+xml:
+  path: C:/Users/admin/Desktop/银川图模/
